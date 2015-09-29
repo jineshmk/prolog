@@ -1,0 +1,48 @@
+
+1 ?- [interactive_verifier].
+% compiling /web/LRG/WP/interactive_verifier.pl...
+% compiled /web/LRG/WP/interactive_verifier.pl in module user, 30 msec 40864
+% bytes
+yes
+
+2 ?- verify(fact).
+
+Enter loop invariant for: while (i=<n) {f=f*i;i=i+1}
+
+|: (i =< n+1) and (f = fact(i-1)).
+
+Is the following true? 
+
+   i=<n and 
+   i=<n+1 and 
+   f=fact(i-1)
+   -->
+      i=<n and 
+      f*i=fact(i)
+
+Enter true./false.: true.
+
+Is the following true? 
+
+   i>=n+1 and 
+   i=<n+1 and 
+   f=fact(i-1)
+   -->
+      f=fact(n)
+
+Enter true./false.: true.
+
+Is the following true? 
+
+   n>=0
+   -->
+      0=<n and 
+      1=fact(0)
+
+Enter true./false.: true.
+
+The program is verified for partial correctness!
+
+true.
+
+3 ?- 

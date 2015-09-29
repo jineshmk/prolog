@@ -1,0 +1,22 @@
+input  
+output 
+       
+program {  
+	n = 100;  
+	p = 1;
+	x = read();
+        while (p =< n and x <> a(p)) {
+		p = p + 1;
+	};
+}
+.
+
+Notes:
+
+1. You have to fill in the input and output condition.
+
+2. In writing the output condition you may make use of the 
+   notation (x <> a(p:q)) to mean x <> a[p] ... x <> a[q].
+   
+3. Conditional formula is written such as ((x = y+z) --> (p*q <> a(100)))
+

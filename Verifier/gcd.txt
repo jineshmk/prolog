@@ -1,0 +1,18 @@
+input (x = m) and (y = n)
+output x = gcd(m, n)
+program 
+     {
+     	while (not (x=y)) {
+	      if (x > y) 
+		   {x = x-y;}
+	      else {y = y-x;};
+     	};
+     }.
+
+The lexical analyzer will not read past the '.', so everything here
+is just a comment.
+
+Enter the following loop invariant for the above program:
+
+gcd(x,y) = gcd(m,n).
+

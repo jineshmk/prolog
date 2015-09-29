@@ -4,16 +4,15 @@ jsonval(In) :- atom_codes(In,L),tokenize(L,Tokens),!,json(Tokens, []).
 
 %---------------Grammer-------------------------------
 
-json --> begin, body,end.
-body --> [].
-body --> key,sep,value,body.
-body --> comma,body.
-key -->[_].
-value -->[_].
-begin --> ['{'].
-end --> ['}'].
-sep --> [':'].
-comma --> [ ','].
+json --> ['{'],members,['}']
+members --> []. 
+members --> pair.
+members --> pair,members.
+pair --> key, [':'], value.
+key --> [_].
+value --> [_].
+
+
 
 
 
