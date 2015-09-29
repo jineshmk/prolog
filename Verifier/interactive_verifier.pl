@@ -16,7 +16,7 @@
 verify(File) :-
 	open(File,read,Stream),
 	lex(Stream,Tokens),
-	parse(Tokens,Triple),writelist(Tokens),
+	parse(Tokens,Triple),
 	prove(Triple),
 	close(Stream).
 
@@ -54,7 +54,7 @@ ifthenelse(if(B,T,E)) --> [if], ['('], expr(B), [')'], [then],
 while(whl(B,W)) --> [while], ['('], bexpr(B), [')'], cmpdstmt(W).
 for(whl(B,W;S1)) --> [for],['('],assign(S) ,[';'],bexpr(B),[';'],assign(S1),[')'],cmpdstmt(W).
 
-assignment -->[_].
+
 
 writelist([]).
 writelist([H|T]) :- write(H), nl, writelist(T).
