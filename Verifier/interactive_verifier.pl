@@ -47,20 +47,23 @@ stmt(S)		--> for(S),[';'].
 
 assign((L = R)) --> var(L), [=], expr(R).
 
+
 ifthenelse(if(B,T))   --> [if], ['('], expr(B), [')'], cmpdstmt(T).
 ifthenelse(if(B,T,E)) --> [if], ['('], expr(B), [')'], [then], 
 					cmpdstmt(T), [else], cmpdstmt(E).
 
 while(whl(B,W)) --> [while], ['('], bexpr(B), [')'], cmpdstmt(W).
-for(whl(B,W;S1)) --> [for],['('],assign(S) ,[';'],bexpr(B),[';'],assign(S1),[')'],cmpdstmt(W).
+for(whl(B,W;S1)) --> [for],['('],assignment(_) ,[';'],bexpr(B),[';'],assignment(S1),[')'],cmpdstmt(W).
 
-
+%--To handle optional condition in for loop
+assignment([]) -->[].
+assignment(S) -->assign(S).
 
 writelist([]).
 writelist([H|T]) :- write(H), nl, writelist(T).
 
 % EXPRESSION GRAMMAR (expr and bexpr)
-
+bexpr([]) --> [].
 bexpr(T) --> expr(T).
 
 expr(T)   --> term(T1), term2(T1, T).
@@ -132,7 +135,8 @@ wp((((X --> TR) and (not(X) --> FA))), if(X, Y, Z), Post) :-
 	wp(TR, Y, Post),
 	wp(FA, Z, Post).
 
-wp(INV, whl(B, S), Post) :-
+wp(INV, whl(B1, S1), Post) :- 
+	simplify(B1,B),simplify(S1,S),
 	nl, write('Enter loop invariant for: while '),
 	    write('('), write(B), write(') '),
 	    write('{'), write(S), write('}'), nl,nl,
@@ -140,7 +144,6 @@ wp(INV, whl(B, S), Post) :-
 	wp(Q, S, INV), !,
 	theorem(((B and INV) --> Q)),
 	theorem(((not(B) and INV) --> Post)).
-
 
 % _____________________________________________
 
@@ -186,7 +189,10 @@ tabs(N) :- write('   '), M is N-1, tabs(M).
 
 
 %____Code for simplification _________________
-
+%--To handle optional condition in for loop --
+simplify(A;[],A):- !.
+simplify((A);B,(A;B)) :- !.
+simplify([],true) :- !.
 
 simplify((1-1), 0) :- !.
 simplify((1*1), 1) :- !.
